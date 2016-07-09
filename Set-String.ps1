@@ -61,7 +61,10 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
             None
 
         .LINK
-            Link
+            https://quietusplus.github.io/Set-String/
+
+        .LINK
+            https://github.com/QuietusPlus/Set-String
     #>
 
     # Find and replace for a single file
