@@ -88,6 +88,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
     # Initialise find and replace object
     $inputFindReplace = @()
 
+    # Process -List parameter
     switch ($List) {
         # Error if -List has been passed together with -Find or -Replace
         { $true -and ($Find -or $Replace) } {
@@ -128,6 +129,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
         }
     }
 
+    # Process -Path parameter
     switch ($Path) {
         # Check if -Path is directory
         {$_ | Test-Path -PathType Container} {
