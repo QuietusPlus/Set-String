@@ -1,0 +1,6 @@
+{
+  "name": "Set-string",
+  "tagline": "PowerShell - Replaces one or multiple specified strings within a file or a directory of files",
+  "body": "# Set-String\r\n\r\nReplaces one or multiple specified strings within a file or a directory of files.\r\n\r\n## Examples\r\n\r\n### Single File\r\n\r\n```PowerShell\r\nC:\\PS> Set-String -Path C:\\Path\\To\\File.txt -Find 'Find this text' -Replace 'Replace with this'\r\n```\r\n\r\n### Directory of Files (Filtered)\r\n\r\n```PowerShell\r\nC:\\PS> Set-String -Path C:\\Path\\To\\Directory -FileType txt -Find 'Find this text' -Replace 'Replace with this'\r\n```\r\n\r\n### Multiple Strings: Hashtable\r\n\r\n```PowerShell\r\nC:\\PS> Set-String -Path C:\\Path\\To\\Directory -FileType txt -List @{ 'Original String 1' = 'Replaced String 1', 'Original String 2' = 'Replaced String 2', 'Original String 3' = 'Replaced String 3' }\r\n```\r\n\r\n### Multiple Strings: Comma Separated Values (.csv)\r\n\r\n```PowerShell\r\nC:\\PS> Set-String -Path C:\\Path\\To\\Directory -FileType txt -List .\\Examples\\CommaSeparatedValues.csv\r\n```\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
