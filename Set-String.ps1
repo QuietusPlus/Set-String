@@ -124,6 +124,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
                 Find = $inputFind
                 Replace = $inputReplace
             }
+            break
         }
     }
 
@@ -144,6 +145,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
         # Check if -Path is file
         {$_ | Test-Path -PathType Leaf} {
             Invoke-Replace (Get-Item -Path $Path) $inputFind $inputReplace
+            break
         }
 
         # Error if not a directory or file
