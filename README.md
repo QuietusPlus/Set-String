@@ -7,23 +7,23 @@ Replaces one or multiple specified strings within a file or a directory of files
 ### Single File
 
 ```PowerShell
-C:\PS> Set-String -Path C:\Path\To\File.txt -Find 'Find this text' -Replace 'Replace with this'
+C:\PS> Set-String -Path .\Examples\Example-FileToProcess.txt -Find 'sad' -Replace 'happy'
 ```
 
 ### Directory of Files (Filtered)
 
 ```PowerShell
-C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -Find 'Find this text' -Replace 'Replace with this'
+C:\PS> Set-String -Path .\Examples -FileType txt -Find 'sad' -Replace 'happy'
 ```
 
 ### Multiple Strings: Hashtable
 
 ```PowerShell
-C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -List @{ 'Original String 1' = 'Replaced String 1', 'Original String 2' = 'Replaced String 2', 'Original String 3' = 'Replaced String 3' }
+C:\PS> Set-String -Path .\Examples -FileType txt -List @{ 'sad' = 'happy'; 'me' = 'you'; 'regular' = 'special' }
 ```
 
 ### Multiple Strings: Comma Separated Values (.csv)
 
 ```PowerShell
-C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -List .\Examples\CommaSeparatedValues.csv
+C:\PS> Set-String -Path .\Examples -FileType txt -List .\Example-FindReplaceList.csv
 ```
