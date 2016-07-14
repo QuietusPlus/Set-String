@@ -25,5 +25,7 @@ C:\PS> Set-String -Path .\Examples -FileType txt -List @{ 'sad' = 'happy'; 'me' 
 ### Multiple Strings: Comma Separated Values (.csv)
 
 ```PowerShell
-C:\PS> Set-String -Path .\Examples -FileType txt -List .\Example-FindReplaceList.csv
+C:\PS> Set-String -Path .\Examples -FileType txt -List .\Examples\Example-FindReplaceList.csv
 ```
+
+The example .csv is available at the following location: [Example-FindReplaceList.csv](Examples/Example-FindReplaceList.csv)
