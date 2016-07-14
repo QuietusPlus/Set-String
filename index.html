@@ -30,22 +30,24 @@
 <h3>
 <a id="single-file" class="anchor" href="#single-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single File</h3>
 
-<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path C:\Path\To\File.txt <span class="pl-k">-</span>Find <span class="pl-s">'Find this text'</span> <span class="pl-k">-Replace</span> <span class="pl-s">'Replace with this'</span></pre></div>
+<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path .\Examples\Example<span class="pl-k">-</span>FileToProcess.txt <span class="pl-k">-</span>Find <span class="pl-s">'sad'</span> <span class="pl-k">-Replace</span> <span class="pl-s">'happy'</span></pre></div>
 
 <h3>
 <a id="directory-of-files-filtered" class="anchor" href="#directory-of-files-filtered" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Directory of Files (Filtered)</h3>
 
-<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path C:\Path\To\Directory <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>Find <span class="pl-s">'Find this text'</span> <span class="pl-k">-Replace</span> <span class="pl-s">'Replace with this'</span></pre></div>
+<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path .\Examples <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>Find <span class="pl-s">'sad'</span> <span class="pl-k">-Replace</span> <span class="pl-s">'happy'</span></pre></div>
 
 <h3>
 <a id="multiple-strings-hashtable" class="anchor" href="#multiple-strings-hashtable" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Strings: Hashtable</h3>
 
-<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path C:\Path\To\Directory <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>List @{ <span class="pl-s">'Original String 1'</span> <span class="pl-k">=</span> <span class="pl-s">'Replaced String 1'</span><span class="pl-k">,</span> <span class="pl-s">'Original String 2'</span> <span class="pl-k">=</span> <span class="pl-s">'Replaced String 2'</span><span class="pl-k">,</span> <span class="pl-s">'Original String 3'</span> <span class="pl-k">=</span> <span class="pl-s">'Replaced String 3'</span> }</pre></div>
+<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path .\Examples <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>List @{ <span class="pl-s">'sad'</span> <span class="pl-k">=</span> <span class="pl-s">'happy'</span><span class="pl-k">;</span> <span class="pl-s">'me'</span> <span class="pl-k">=</span> <span class="pl-s">'you'</span><span class="pl-k">;</span> <span class="pl-s">'regular'</span> <span class="pl-k">=</span> <span class="pl-s">'special'</span> }</pre></div>
 
 <h3>
 <a id="multiple-strings-comma-separated-values-csv" class="anchor" href="#multiple-strings-comma-separated-values-csv" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Strings: Comma Separated Values (.csv)</h3>
 
-<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path C:\Path\To\Directory <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>List .\Examples\CommaSeparatedValues.csv</pre></div>
+<div class="highlight highlight-source-powershell"><pre>C:\PS<span class="pl-k">&gt;</span> <span class="pl-c1">Set-String</span> <span class="pl-k">-</span>Path .\Examples <span class="pl-k">-</span>FileType txt <span class="pl-k">-</span>List .\Examples\Example<span class="pl-k">-</span>FindReplaceList.csv</pre></div>
+
+<p>The example .csv is available at the following location: <a href="https://github.com/QuietusPlus/Set-String/blob/master/Examples/Example-FindReplaceList.csv">Example-FindReplaceList.csv</a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/QuietusPlus/Set-String">Set-string</a> is maintained by <a href="https://github.com/QuietusPlus">QuietusPlus</a>.</span>
