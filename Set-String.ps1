@@ -52,7 +52,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
             C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -Find 'Find this text' -Replace 'Replace with this'
 
         .EXAMPLE
-            C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -List @{ 'Original String 1' = 'Replaced String 1', 'Original String 2' = 'Replaced String 2', 'Original String 3' = 'Replaced String 3' }
+            C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -List @{ 'Original String 1' = 'Replaced String 1'; 'Original String 2' = 'Replaced String 2'; 'Original String 3' = 'Replaced String 3' }
 
         .EXAMPLE
             C:\PS> Set-String -Path C:\Path\To\Directory -FileType txt -List .\Examples\CommaSeparatedValues.csv
@@ -68,18 +68,35 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
     #>
 
     # Find and replace for a single file
-    function Invoke-Replace ($FilePath, $ReplaceList) {
+    function Invoke-Replace ([string]$FilePath, [Object[]]$ReplaceList) {
         # Get file and it's content
-        $inputFile = Get-Item -Path $FilePath
-        $content = Get-Content -Path $inputFile
+        $content = Get-Content -Path $FilePath
 
         # Replace string(s) specified within the passed list
         $ReplaceList | ForEach-Object {
-            $content = $content -replace $_.Find, $_.Replace
+            $content = $content -replace "\b($($_.Find))\b", $_.Replace
+        }
+
+        # Check if backup already exists, prompt user to overwrite if true
+        if (Test-Path -Path "$FilePath.bak") {
+            # Save original foreground color
+            $colorForeground = [System.Console]::ForegroundColor
+
+            # Set foreground color and write warning message
+            Write-Output "`n [$(Split-Path -Path $FilePath -Leaf).bak]`n"
+            [System.Console]::ForegroundColor = 'Yellow'
+            Write-Output "  Backup already exists! Are you sure you want to continue? [Y]`n"
+
+            # Restore foreground color
+            [System.Console]::ForegroundColor = $colorForeground
+
+            # Prompt user for input
+            $inputKey = [Console]::ReadKey($true)
+            if ($inputKey.KeyChar -ne 'Y') { exit }
         }
 
         # Backup original file
-        Copy-Item $FilePath "$FilePath.bak"
+        Copy-Item -Path $FilePath -Destination "$FilePath.bak"
 
         # Save modified file
         Set-Content -Path $FilePath -Value $content
@@ -91,9 +108,11 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
     # Process -List parameter
     switch ($List) {
         # Error if -List has been passed together with -Find or -Replace
-        { $true -and ($Find -or $Replace) } {
-            Write-Error 'Cannot process -List and -Find/-Replace at the same time.'
-            break
+        { $_ -notlike $null } {
+            if ($Find -or $Replace) {
+                Write-Error 'Cannot process [-List] and [-Find|-Replace] at the same time.'
+                exit
+            }
         }
 
         # List is .csv
@@ -122,8 +141,8 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
         # Otherwise use specified -Find and -Replace
         Default {
             $inputFindReplace += New-Object PSObject -Property @{
-                Find = $inputFind
-                Replace = $inputReplace
+                Find = $Find
+                Replace = $Replace
             }
             break
         }
@@ -131,11 +150,16 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
 
     # Process -Path parameter
     switch ($Path) {
+        # Check if path is wildcard
+        { $_ -eq '*' } {
+            Write-Error 'Cannot process wildcards'
+            exit
+        }
         # Check if -Path is directory
         {$_ | Test-Path -PathType Container} {
             if (-not $FileType) {
                 Write-Error 'Please specify -FileType when -Path is directory'
-                break
+                exit
             }
 
             foreach ($file in $(Get-ChildItem -Path $Path -Filter "*.$FileType" -Recurse).FullName) {
@@ -146,7 +170,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
 
         # Check if -Path is file
         {$_ | Test-Path -PathType Leaf} {
-            Invoke-Replace -FilePath (Get-Item -Path $Path) -ReplaceList $inputFindReplace
+            Invoke-Replace -FilePath (Get-Item -Path $Path).FullName -ReplaceList $inputFindReplace
             break
         }
 
