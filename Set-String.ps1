@@ -146,7 +146,7 @@ function Set-String ([string]$Path, [string]$FileType, [string]$List, [string]$F
 
         # Check if -Path is file
         {$_ | Test-Path -PathType Leaf} {
-            Invoke-Replace (Get-Item -Path $Path) $inputFind $inputReplace
+            Invoke-Replace -FilePath (Get-Item -Path $Path) -ReplaceList $inputFindReplace
             break
         }
 
